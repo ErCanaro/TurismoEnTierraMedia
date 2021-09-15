@@ -1,0 +1,11 @@
+Moria,AVENTURA,6,2.0,10
+Mordor,AVENTURA,25,3.0,4
+Bosque Negro,AVENTURA,3,4.0,12
+Aventura cara,AVENTURA,37,2.0,12
+Minas Tirith,PAISAJES,5,2.5,25
+Abismo de Helm,PAISAJES,5,2.0,15
+Erebor,PAISAJES,12,3.0,32
+Paisaje Mas Cara,PAISAJES,29,3.0,32
+La Comarca,DEGUSTACION,3,6.5,150
+Lothlorien,DEGUSTACION,35,1,30
+Degustacion cara,DEGUSTACION,51,1.5,150

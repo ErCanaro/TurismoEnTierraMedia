@@ -1,0 +1,9 @@
+Aventura 3x2,AVENTURA,Moria,Mordor,Bosque Negro,0,0,1
+Paisajes 3x2,PAISAJES,Erebor,Minas Tirith,Abismo de Helm,0,0,1
+Degustacion 3x2,DEGUSTACION,Degustacion cara,La Comarca,Lothlorien,0,0,1
+Promo-20% Aventura,AVENTURA,Aventura cara,Moria,x,20,0,2
+Promo-25% Paisajes,PAISAJES,Abismo de Helm,Erebor,x,25,0,2
+Promo-15% Degustacion,DEGUSTACION,Lothlorien,La Comarca,x,15,0,2
+Promo Aventura,AVENTURA,Aventura cara,Moria,x,0,41,3
+Promo Paisajes,PAISAJES,Abismo de Helm,Erebor,x,0,41,3
+Promo Degustacion,DEGUSTACION,Lothlorien,La Comarca,x,0,41,3
