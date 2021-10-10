@@ -4,19 +4,34 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Usuario {
-
+	private Long IdUsuario;
 	private String nombre;
-	private TipoAtraccion preferencia;
 	private int presupuesto;
 	private double tiempoDisponible;
+	private TipoAtraccion preferencia;
+	private Posicion posicion;
 	private ArrayList<Atraccion> historialDeAtracciones = new ArrayList<Atraccion>(); // Cambio visibilidad ver si rompe
 	private ArrayList<Producto> itinerario = new ArrayList<Producto>();
+
 
 	public Usuario(String nombre, TipoAtraccion preferencia, int presupuesto, double tiempoDisponible) {
 		this.nombre = nombre;
 		this.preferencia = preferencia;
 		this.presupuesto = presupuesto;
 		this.tiempoDisponible = tiempoDisponible;
+	}
+
+	public Usuario(Long idUsuario, String nombre, int dinero, double tiempo, Posicion posicion, TipoAtraccion preferencia) {
+		this.IdUsuario = idUsuario;
+		this.nombre = nombre;
+		this.preferencia = preferencia;
+		this.presupuesto = dinero;
+		this.tiempoDisponible = tiempo;
+		this.posicion = posicion;
+	}
+
+	public void setPresupuesto(int presupuesto) {
+		this.presupuesto = presupuesto;
 	}
 
 	public ArrayList<Atraccion> getHistorialDeAtracciones() {
@@ -114,6 +129,18 @@ public class Usuario {
 			return false;
 		Usuario other = (Usuario) obj;
 		return Objects.equals(nombre, other.nombre);
+	}
+
+	public Long getIdUsuario() {
+		return this.IdUsuario;
+	}
+
+	public double getPosX() {
+		return this.posicion.getX();
+	}
+
+	public double getPosY() {
+		return this.posicion.getY();
 	}
 
 }
