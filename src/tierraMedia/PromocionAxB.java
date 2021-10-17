@@ -1,5 +1,7 @@
 package tierraMedia;
 
+import java.util.ArrayList;
+
 public class PromocionAxB extends Producto {
 
 	public PromocionAxB(String nombre, TipoAtraccion tipo, Atraccion a1, Atraccion a2, Atraccion a3) {
@@ -16,6 +18,14 @@ public class PromocionAxB extends Producto {
 //		return this.getTipo() == a1.getTipo() && this.getTipo() == a2.getTipo() && this.getTipo() == a3.getTipo();
 //	}
 
+
+	public PromocionAxB(String nombre, TipoAtraccion tipoAtraccion, ArrayList<Atraccion> atraccionesIncluidas) {
+		super(nombre, tipoAtraccion, 0, 0);
+		super.setCosto(atraccionesIncluidas.get(0).getCosto() + atraccionesIncluidas.get(1).getCosto());
+		super.setDuracion(atraccionesIncluidas.get(0).getDuracion() + atraccionesIncluidas.get(1).getDuracion() + atraccionesIncluidas.get(1).getDuracion());
+		super.setPromo(true);
+		this.atraccionesIncluidas= atraccionesIncluidas;
+	}
 
 	@Override
 	public String toString() {

@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import tierraMedia.TipoAtraccion;
 
 public class UsuarioDAOImpl implements UsuarioDAO {
 
-	public int insert(Usuario usuario) {
+	public int insertar(Usuario usuario) {
 		
 		try {
 			String sql = "INSERT INTO USUARIOS (NOMBRE, DINERO, TIEMPO, POSX, POSY, ID_TIPO_ATRACCION) VALUES (?, ?, ?, ?, ?, ?)";
@@ -41,7 +42,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		
 	}
 
-	public int update(Usuario usuario) {
+	public int actualizar(Usuario usuario) {
 		
 		try {
 			String sql = "UPDATE USUARIOS SET Nombre = ?, dinero = ?, tiempo = ?, PosX = ?, PosY = ? WHERE id_usuario = ?";
@@ -53,8 +54,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			statement.setDouble(3, usuario.getTiempoDisponible());
 			statement.setDouble(4, usuario.getPosX()); 
 			statement.setDouble(5, usuario.getPosY()); //pos y
-			//statement.setString(6, usuario.getPreferencia().toString()); // ¿si fuera id de preferencia como seria?
-			statement.setInt(6, 8);
+			//statement.setString(6, usuario.getPreferencia().toString()); 
+			statement.setLong(6, usuario.getIdUsuario());
 			int rows = statement.executeUpdate();
 
 			return rows;
@@ -65,7 +66,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		
 	}
 
-	public int delete(Usuario usuario) {
+	public int borrar(Usuario usuario) {
 		
 		try {
 			String sql = "DELETE FROM USUARIOS WHERE id_usuario = ?";
@@ -82,7 +83,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		
 	}
 
-	public Usuario findByIdUsuario(String idUsuario) {
+	public Usuario buscarPorIdUsuario(String idUsuario) {
 		try {
 			String sql = "SELECT Usuarios.id_usuario, Usuarios.nombre, Usuarios.dinero, " 
 					+ "Usuarios.tiempo, Usuarios.PosX, Usuarios.PosY, Tipos_atraccion.Descripcion_tipo_atraccion "
@@ -97,7 +98,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			Usuario user = null;
 
 			if (resultados.next()) {
-				user = toUser(resultados);
+				user = toUsuario(resultados);
 			}
 
 			return user;
@@ -108,7 +109,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		
 	}
 
-	public int countAll() {
+	public int contarTodos() {
 		try {
 			String sql = "SELECT COUNT(1) AS TOTAL FROM USUARIOS";
 			Connection conn = ProveedorDeConeccion.getConnection();
@@ -127,7 +128,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	
 	
 
-	public List<Usuario> findAll() {
+	public ArrayList<Usuario> buscarTodos() {
 		try {
 			String sql = "SELECT Usuarios.id_usuario, Usuarios.nombre, Usuarios.dinero, " 
 					+ "Usuarios.tiempo, Usuarios.PosX, Usuarios.PosY, Tipos_atraccion.Descripcion_tipo_atraccion "
@@ -138,9 +139,9 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			PreparedStatement statement = conn.prepareStatement(sql);
 			ResultSet resultados = statement.executeQuery();
 
-			List<Usuario> usuarios = new LinkedList<Usuario>();
+			ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 			while (resultados.next()) {
-				usuarios.add(toUser(resultados));
+				usuarios.add(toUsuario(resultados));
 			}
 
 			return usuarios;
@@ -151,7 +152,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	
 	
 
-	private Usuario toUser(ResultSet resultados) throws SQLException {
+	private Usuario toUsuario(ResultSet resultados) throws SQLException {
 	
 		// COLUMNAS DE LA BD:  USUARIO  NOMBRE  DINERO  TIEMPO  POSX  POSY  idPREFERENCIA
 		Long idUsuario = resultados.getLong(1);

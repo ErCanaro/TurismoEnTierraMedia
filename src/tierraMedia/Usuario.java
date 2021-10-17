@@ -3,6 +3,10 @@ package tierraMedia;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import dao.AtraccionDAO;
+import dao.DAOFactory;
+import dao.UsuarioDAO;
+
 public class Usuario {
 	private Long IdUsuario;
 	private String nombre;
@@ -63,15 +67,25 @@ public class Usuario {
 	}
 
 	public void aceptarSugerencia(Producto sugerencia) {
+		UsuarioDAO usuarioDAO = DAOFactory.getUsuarioDAO(); 
+		AtraccionDAO atraccionDAO = DAOFactory.getAtraccionDAO();
+		
 		if (this.presupuesto >= sugerencia.getCosto() && this.tiempoDisponible >= sugerencia.getDuracion()
 				&& sugerencia.getCupo() > 0 && !this.historialDeAtracciones.contains(sugerencia)) {
 			this.itinerario.add(sugerencia);
 			this.historialDeAtracciones.addAll(sugerencia.getAtraccionesIncluidas());
 			this.tiempoDisponible -= sugerencia.getDuracion();
 			this.presupuesto -= sugerencia.getCosto();
+			//System.out.println("aceptar sugerincia ---- cantidad de atraciones incluidas: "+ sugerencia.getAtraccionesIncluidas().size());
 			for (Atraccion atr : sugerencia.getAtraccionesIncluidas()) {
 				atr.restarCupo();
+				atraccionDAO.actualizarCupo(atr);
+				//System.out.println("Id_Atraccion: " + atr.getIdAtraccion());
+				//System.out.println(atr);
 			}
+			
+		usuarioDAO.actualizar(this);
+			
 		}
 
 	}

@@ -8,7 +8,7 @@ public class TierraMediaTest {
 
 	@Test
 	public void queAlCargarDatosDesdeArchivoSeGuardenEnLosAtributosCorrespondientes() {
-		tm.cargarDatosDesdeArchivo();
+		tm.cargarDatos();
 		assertEquals(11, tm.getAtraccionesDB().size());
 		assertEquals(9, tm.getPromocionesDB().size());
 		assertEquals(20, tm.getProductosDB().size());
@@ -17,7 +17,7 @@ public class TierraMediaTest {
 
 	@Test
 	public void quePuedaOrdenarUnaSugerencia() {
-		tm.cargarDatosDesdeArchivo();
+		tm.cargarDatos();
 
 		Usuario u1 = tm.getUsuariosDB().get(4);
 

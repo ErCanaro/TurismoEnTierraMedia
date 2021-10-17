@@ -9,6 +9,11 @@ import java.util.Comparator;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import dao.AtraccionDAO;
+import dao.DAOFactory;
+import dao.PromocionDAO;
+import dao.UsuarioDAO;
+
 public class TierraMedia {
 
 	private ArrayList<Atraccion> atraccionesDB = new ArrayList<Atraccion>();
@@ -33,15 +38,18 @@ public class TierraMedia {
 		return this.usuariosDB;
 	}
 
-	public void cargarDatosDesdeArchivo() {
+	public void cargarDatos() {
+		UsuarioDAO usuarioDAO = DAOFactory.getUsuarioDAO();
+		AtraccionDAO atraccionDAO = DAOFactory.getAtraccionDAO();
+		PromocionDAO promocionDAO = DAOFactory.getPromocionDAO();
 		Archivo archivo = new Archivo();
 		archivo.crearAtraccionesDesdeArchivo();
 		archivo.crearPromocionesDesdeArchivos();
-		archivo.crearUsuariosDesdeArchivo();
+		//archivo.crearUsuariosDesdeArchivo();
 
-		this.atraccionesDB = archivo.getAtraccionesDB();
-		this.promocionesDB = archivo.getPromocionesDB();
-		this.usuariosDB = archivo.getUsuariosDB();
+		this.atraccionesDB = atraccionDAO.buscarTodos();   // archivo.getAtraccionesDB();
+		this.promocionesDB = promocionDAO.buscarTodos();   // archivo.getPromocionesDB();         //promocionDAO.buscarTodos();   //
+		this.usuariosDB = usuarioDAO.buscarTodos();        // archivo.getUsuariosDB();
 
 		this.productosDB.addAll(this.atraccionesDB);
 		this.productosDB.addAll(this.promocionesDB);
@@ -264,7 +272,7 @@ public class TierraMedia {
 
 	public static void main(String[] args) {
 		TierraMedia tm = new TierraMedia();
-		tm.cargarDatosDesdeArchivo();
+		tm.cargarDatos();
 
 		int opcion = 0;
 

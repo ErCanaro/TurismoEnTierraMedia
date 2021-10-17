@@ -1,5 +1,7 @@
 package tierraMedia;
 
+import java.util.ArrayList;
+
 public class PromocionAbsoluta extends Producto {
 
 	public PromocionAbsoluta(String nombre, TipoAtraccion tipo, Atraccion a1, Atraccion a2, int costo) {
@@ -8,6 +10,15 @@ public class PromocionAbsoluta extends Producto {
 		super.setPromo(true);
 		this.atraccionesIncluidas.add(a1);
 		this.atraccionesIncluidas.add(a2);
+	}
+
+
+	public PromocionAbsoluta(String nombre, TipoAtraccion tipoAtraccion, ArrayList<Atraccion> atraccionesIncluidas,
+			int costo) {
+		super(nombre, tipoAtraccion, costo, 0);
+		super.setDuracion(atraccionesIncluidas.get(0).getDuracion() + atraccionesIncluidas.get(1).getDuracion());
+		super.setPromo(true);
+		this.atraccionesIncluidas= atraccionesIncluidas;
 	}
 
 

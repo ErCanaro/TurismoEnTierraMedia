@@ -20,17 +20,17 @@ public class UsuarioDAOTest {
 	public void testABMdeUsuarios() {
 		
 		System.out.println("------------   CUENTA EL TOTAL DE USUARIOS  ----------------");
-		UsuarioDAO usuarioDAO = DAOFactory.getUserDAO();
-		System.out.println(usuarioDAO.findAll());
-		System.out.println(usuarioDAO.countAll());
+		UsuarioDAO usuarioDAO = DAOFactory.getUsuarioDAO();
+		System.out.println(usuarioDAO.buscarTodos());
+		System.out.println(usuarioDAO.contarTodos());
 
 		
 		
 		
 		String idBusca = "4"; 
 		System.out.println("------------ BUSCA EL USUARIO " + idBusca + " que existe Y OTRO QUE NO EXISTE ----------------");
-		System.out.println("USUARIO: " + usuarioDAO.findByIdUsuario("4"));
-		System.out.println("USUARIO: " + usuarioDAO.findByIdUsuario("78"));
+		System.out.println("USUARIO: " + usuarioDAO.buscarPorIdUsuario("4"));
+		System.out.println("USUARIO: " + usuarioDAO.buscarPorIdUsuario("78"));
 
 
 		
@@ -42,7 +42,7 @@ public class UsuarioDAOTest {
 		Posicion pos = new Posicion(1,2);
 		TipoAtraccion preferencia = TipoAtraccion.AVENTURA;
 		Usuario unUsuario = new Usuario(id, nombre, dinero, tiempo, pos, preferencia);
-		usuarioDAO.insert(unUsuario);
+		usuarioDAO.insertar(unUsuario);
 		System.out.println(unUsuario);
 
 		
@@ -50,20 +50,20 @@ public class UsuarioDAOTest {
 		System.out.println("-------- MODIFICA AL USUARIO RECIUEN INGRESADO EL DINERO LO PONE EN 1----------------");
 		System.out.println(unUsuario.getPresupuesto());
 		unUsuario.setPresupuesto(1);
-		usuarioDAO.update(unUsuario);
+		usuarioDAO.actualizar(unUsuario);
 		System.out.println(unUsuario);
 		
 		
 		System.out.println("-------- CUENTA LA NUEVA CANTIDAD DE USUARIOS LUEGO DEL INSERT --------------------");
-		System.out.println(usuarioDAO.findAll());
-		System.out.println(usuarioDAO.countAll());
+		System.out.println(usuarioDAO.buscarTodos());
+		System.out.println(usuarioDAO.contarTodos());
 
 		
 		
 		System.out.println("--------- BORRA EL USUARIO INSERTADO -------------------");
-		usuarioDAO.delete(unUsuario);
-		System.out.println(usuarioDAO.findAll());
-		System.out.println(usuarioDAO.countAll());
+		usuarioDAO.borrar(unUsuario);
+		System.out.println(usuarioDAO.buscarTodos());
+		System.out.println(usuarioDAO.contarTodos());
 	}
 
 

@@ -1,12 +1,22 @@
 package tierraMedia;
 
 public class Atraccion extends Producto {
+	private long idAtraccion;
 	private int cupo;
+	private Posicion ubicacion;
 
 	public Atraccion(String nombre, TipoAtraccion tipo, int costo, double duracion, int cupo) {
 		super(nombre, tipo, costo, duracion);
 		this.cupo = cupo;
 		this.atraccionesIncluidas.add(this);
+	}
+	
+	public Atraccion(long idAtraccion, String nombre, TipoAtraccion tipo, int costo, double duracion, int cupo, Posicion ubicacion ) {
+		super(nombre, tipo, costo, duracion);
+		this.cupo = cupo;
+		this.atraccionesIncluidas.add(this);
+		this.idAtraccion = idAtraccion;
+		this.ubicacion = ubicacion;
 	}
 
 
@@ -32,5 +42,25 @@ public class Atraccion extends Producto {
 		System.out.println("[-]");
 
 	}
+	
+	public long getIdAtraccion() {
+		return this.idAtraccion;
+	}
+	
+	public double getPosX() {
+		return this.ubicacion.getX();
+	}
+	
+	public double getPosY() {
+		return this.ubicacion.getY();
+	}
+	
+	/*
+	@Override
+	public String toString() {
+		return "-->Nombre: " + super.getNombre();
+	}
+	*/
+ 
 
 }
