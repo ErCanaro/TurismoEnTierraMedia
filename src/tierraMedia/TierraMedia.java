@@ -269,6 +269,21 @@ public class TierraMedia {
 			imprimirItinerarioEnArchivo(user);
 		}
 	}
+	
+	
+	public Usuario obtenerUsuarioPorID(long IdUsuario) {
+		Usuario usuario = null;
+		for(Usuario usr : usuariosDB) {
+			if(usr.getIdUsuario() == IdUsuario) {
+				usuario = usr;
+				break;
+			}
+		}
+		return usuario;
+	}
+	
+	
+	
 
 	public static void main(String[] args) {
 		TierraMedia tm = new TierraMedia();

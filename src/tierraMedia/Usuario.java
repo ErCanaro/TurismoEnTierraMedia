@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import dao.AtraccionDAO;
 import dao.DAOFactory;
+import dao.ItinerarioDAO;
 import dao.UsuarioDAO;
 
 public class Usuario {
@@ -69,6 +70,9 @@ public class Usuario {
 	public void aceptarSugerencia(Producto sugerencia) {
 		UsuarioDAO usuarioDAO = DAOFactory.getUsuarioDAO(); 
 		AtraccionDAO atraccionDAO = DAOFactory.getAtraccionDAO();
+		ItinerarioDAO itinerarioDAO = DAOFactory.getItinerarioDAO();
+		Itinerario nvoItinerario = null;
+		
 		
 		if (this.presupuesto >= sugerencia.getCosto() && this.tiempoDisponible >= sugerencia.getDuracion()
 				&& sugerencia.getCupo() > 0 && !this.historialDeAtracciones.contains(sugerencia)) {
@@ -76,16 +80,31 @@ public class Usuario {
 			this.historialDeAtracciones.addAll(sugerencia.getAtraccionesIncluidas());
 			this.tiempoDisponible -= sugerencia.getDuracion();
 			this.presupuesto -= sugerencia.getCosto();
-			//System.out.println("aceptar sugerincia ---- cantidad de atraciones incluidas: "+ sugerencia.getAtraccionesIncluidas().size());
+			
 			for (Atraccion atr : sugerencia.getAtraccionesIncluidas()) {
 				atr.restarCupo();
 				atraccionDAO.actualizarCupo(atr);
-				//System.out.println("Id_Atraccion: " + atr.getIdAtraccion());
-				//System.out.println(atr);
+			}
+		
+			/*
+			long idItinerario = 0;
+			if (this.itinerario.isEmpty()) {
+				nvoItinerario = new Itinerario (this.IdUsuario, sugerencia.getCosto(), sugerencia.getDuracion());
+				itinerarioDAO.insertar(nvoItinerario);
+				idItinerario = itinerarioDAO.obtenerIDItinerarioPorIdUsuario(this.IdUsuario);
+				nvoItinerario.setIdItinerario(idItinerario);
+			}else {
+				idItinerario = itinerarioDAO.obtenerIDItinerarioPorIdUsuario(this.IdUsuario);
 			}
 			
-		usuarioDAO.actualizar(this);
+			for (Atraccion atraccion : sugerencia.getAtraccionesIncluidas()) {
+				itinerarioDAO.insertarItemItinerario(idItinerario, atraccion.getIdAtraccion());
+			}
+			*/
 			
+			usuarioDAO.actualizar(this);
+			
+
 		}
 
 	}

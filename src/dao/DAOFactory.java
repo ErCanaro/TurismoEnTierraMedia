@@ -11,14 +11,14 @@ public class DAOFactory {
 	}
 
 	
-	public static PromocionDAOImpl getPromocionDAO() {
+	public static PromocionDAO getPromocionDAO() {
 		return new PromocionDAOImpl();
 	}
 	
-	/*public static ItinerarioDAOImpl getItinerarioDAO() {
-		return new PromocionDAOImpl();
+	public static ItinerarioDAO getItinerarioDAO() {
+		return new ItinerarioDAOImpl();
 	}
-	*/
+	
 	
 	
 }
