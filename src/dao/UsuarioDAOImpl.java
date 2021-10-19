@@ -53,8 +53,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			statement.setInt(2, usuario.getPresupuesto());
 			statement.setDouble(3, usuario.getTiempoDisponible());
 			statement.setDouble(4, usuario.getPosX()); 
-			statement.setDouble(5, usuario.getPosY()); //pos y
-			//statement.setString(6, usuario.getPreferencia().toString()); 
+			statement.setDouble(5, usuario.getPosY()); 
+			//statement.setString( ? , TipoAtraccion.values(usuario.getPreferencia()) );  
 			statement.setLong(6, usuario.getIdUsuario());
 			int rows = statement.executeUpdate();
 
@@ -153,7 +153,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	
 
 	private Usuario toUsuario(ResultSet resultados) throws SQLException {
-	
 		// COLUMNAS DE LA BD:  USUARIO  NOMBRE  DINERO  TIEMPO  POSX  POSY  idPREFERENCIA
 		Long idUsuario = resultados.getLong(1);
 		String nombre = resultados.getString(2);
@@ -162,7 +161,13 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		double posX = resultados.getInt(5);
 		double posY = resultados.getInt(6);
 		tierraMedia.TipoAtraccion preferencia =  TipoAtraccion.valueOf(resultados.getString(7).toUpperCase());
-		return new Usuario(idUsuario, nombre , dinero, tiempo, new Posicion(posX, posY), preferencia);
+		Usuario usuario = new Usuario(idUsuario, nombre , dinero, tiempo, new Posicion(posX, posY), preferencia);
+		// ------------ FALTA HACER ---------------
+		//usuario.setItinerario(recuperarItinerarioDelUsuario(idUsuario));
+		//usuario.setHistorialDeAtracciones(recuperarHistorialDelUsuario(usuario.getItinerario()));
+		
+		return usuario;
+		
 	
 		
 	}

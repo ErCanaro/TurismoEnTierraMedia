@@ -39,23 +39,23 @@ public class PromocionDAOImpl implements PromocionDAO {
 	
 	
 	private Producto toProducto(ResultSet resultados) throws SQLException {
-		// COLUMNAS DE LA BD:  ID_promoCIONES  NOMBRE  PRECIO  DESCUENTO   TIPO_ATRACCION   ID_TIPO_PROMOCION
+		// COLUMNAS DEL RESULTSET:  ID_promoCIONES  NOMBRE  PRECIO  DESCUENTO   TIPO_ATRACCION   ID_TIPO_PROMOCION
 		Long   idPromocion         = resultados.getLong(1);
 		String nombre              = resultados.getString(2);
 		int    costoAbsoluto       = resultados.getInt(3);
 		int    descuentoPorcentual = resultados.getInt(4);
-		tierraMedia.TipoAtraccion tipoAtraccion =  TipoAtraccion.valueOf(resultados.getString(5));
+		TipoAtraccion tipoAtraccion =  TipoAtraccion.valueOf(resultados.getString(5));
 		int    tipoPromo           = resultados.getInt(6);
 	
 		ArrayList<Atraccion> atraccionesIncluidas = atraccionesDeLaPromocion(resultados);
 
 		Producto producto = null;
 		if (tipoPromo == 1) {
-			producto = new PromocionAxB(nombre, tipoAtraccion, atraccionesIncluidas);
+			producto = new PromocionAxB(idPromocion, nombre, tipoAtraccion, atraccionesIncluidas);
 		} else if (tipoPromo == 2) {
-			producto = new PromoPorcentual(nombre, tipoAtraccion, atraccionesIncluidas, descuentoPorcentual);
+			producto = new PromoPorcentual(idPromocion, nombre, tipoAtraccion, atraccionesIncluidas, descuentoPorcentual);
 		} else if (tipoPromo == 3) {
-			producto = new PromocionAbsoluta(nombre, tipoAtraccion, atraccionesIncluidas, costoAbsoluto);
+			producto = new PromocionAbsoluta(idPromocion, nombre, tipoAtraccion, atraccionesIncluidas, costoAbsoluto);
 		}
 		
 		return producto;
@@ -88,35 +88,30 @@ public class PromocionDAOImpl implements PromocionDAO {
 
 	@Override
 	public int insertar(Producto t) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 
 	@Override
 	public int actualizar(Producto t) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 
 	@Override
 	public int borrar(Producto t) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 
 	@Override
 	public Producto buscarPorIdAtraccion(Long id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
 	public int contarTodos() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

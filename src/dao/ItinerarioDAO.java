@@ -1,13 +1,14 @@
 package dao;
 
-import tierraMedia.Atraccion;
-import tierraMedia.Itinerario;
 
-public interface ItinerarioDAO extends GenericDAO<Itinerario> {
+import tierraMedia.Producto;
+
+
+public interface ItinerarioDAO extends GenericDAO<Producto> {
 	
-	public abstract Itinerario buscarPorIdItinerario(Long IdItinerario);
-	public abstract int agregarItemItinerario(Atraccion atraccion);
-	public abstract long obtenerIDItinerarioPorIdUsuario(Long idUsuario);
-	public abstract int insertarItemItinerario(long idItinerario, long idAtraccion);
+	//public abstract Producto buscarItemItinerarioPorIdProducto(long IdProducto);
+	//public abstract int agregarItemItinerario(long  IdUsuario, Producto producto);
+	//public abstract long obtenerIDItinerarioPorIdUsuario(long IdUsuario);
+	public int insertarItemItinerario(long  IdUsuario, long IdProducto, String tipo);
 
 }

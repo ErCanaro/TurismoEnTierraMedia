@@ -39,20 +39,25 @@ public class TierraMedia {
 	}
 
 	public void cargarDatos() {
+		
 		UsuarioDAO usuarioDAO = DAOFactory.getUsuarioDAO();
 		AtraccionDAO atraccionDAO = DAOFactory.getAtraccionDAO();
 		PromocionDAO promocionDAO = DAOFactory.getPromocionDAO();
-		Archivo archivo = new Archivo();
-		archivo.crearAtraccionesDesdeArchivo();
-		archivo.crearPromocionesDesdeArchivos();
-		//archivo.crearUsuariosDesdeArchivo();
-
-		this.atraccionesDB = atraccionDAO.buscarTodos();   // archivo.getAtraccionesDB();
-		this.promocionesDB = promocionDAO.buscarTodos();   // archivo.getPromocionesDB();         //promocionDAO.buscarTodos();   //
-		this.usuariosDB = usuarioDAO.buscarTodos();        // archivo.getUsuariosDB();
+		
+		this.atraccionesDB = atraccionDAO.buscarTodos();   
+		this.promocionesDB = promocionDAO.buscarTodos();           
+		this.usuariosDB = usuarioDAO.buscarTodos();        
 
 		this.productosDB.addAll(this.atraccionesDB);
 		this.productosDB.addAll(this.promocionesDB);
+
+		//Archivo archivo = new Archivo();
+		//archivo.crearAtraccionesDesdeArchivo();
+		//archivo.crearPromocionesDesdeArchivos();
+		//archivo.crearUsuariosDesdeArchivo();
+		// archivo.getAtraccionesDB();
+		// archivo.getPromocionesDB();
+		// archivo.getUsuariosDB();
 	}
 
 	/**
@@ -270,7 +275,9 @@ public class TierraMedia {
 		}
 	}
 	
-	
+	/*
+	 * 
+	 */
 	public Usuario obtenerUsuarioPorID(long IdUsuario) {
 		Usuario usuario = null;
 		for(Usuario usr : usuariosDB) {

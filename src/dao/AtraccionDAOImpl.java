@@ -31,10 +31,8 @@ public class AtraccionDAOImpl implements AtraccionDAO {
 			ArrayList<Atraccion> atracciones = new ArrayList<Atraccion>();
 			while (resultados.next()) {
 				atracciones.add(toAtraccion(resultados));
-				//System.out.println(toAtraccion(resultados).toString());
 			}
-			
-
+		
 			return atracciones;
 		} catch (Exception e) {
 			throw new MissingDataException(e);
@@ -49,7 +47,7 @@ public class AtraccionDAOImpl implements AtraccionDAO {
 		Long idAtraccion = resultados.getLong(1);
 		String nombre = resultados.getString(2);
 		int cupo = resultados.getInt(3);
-		int costo = resultados.getInt(4);
+		double costo = resultados.getDouble(4);
 		double duracion = resultados.getInt(5);
 		double posX = resultados.getInt(6);
 		double posY = resultados.getInt(7);
@@ -132,20 +130,17 @@ public class AtraccionDAOImpl implements AtraccionDAO {
 	
 	@Override
 	public int contarTodos() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int insertar(Atraccion t) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 
 	@Override
 	public int borrar(Atraccion t) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

@@ -3,7 +3,8 @@ package tierraMedia;
 import java.util.ArrayList;
 
 public class PromocionAxB extends Producto {
-
+	private long idPromocion;
+	
 	public PromocionAxB(String nombre, TipoAtraccion tipo, Atraccion a1, Atraccion a2, Atraccion a3) {
 		super(nombre, tipo, 0, 0);
 		super.setCosto(a1.getCosto() + a2.getCosto());
@@ -14,17 +15,14 @@ public class PromocionAxB extends Producto {
 		this.atraccionesIncluidas.add(a3);
 	}
 
-//	public boolean verificarTipoDeAtraccion(Atraccion a1, Atraccion a2, Atraccion a3) {
-//		return this.getTipo() == a1.getTipo() && this.getTipo() == a2.getTipo() && this.getTipo() == a3.getTipo();
-//	}
 
-
-	public PromocionAxB(String nombre, TipoAtraccion tipoAtraccion, ArrayList<Atraccion> atraccionesIncluidas) {
-		super(nombre, tipoAtraccion, 0, 0);
+	public PromocionAxB(long idPromocion, String nombre, TipoAtraccion tipoAtraccion, ArrayList<Atraccion> atraccionesIncluidas) {
+		super(idPromocion, nombre, tipoAtraccion, 0, 0);
 		super.setCosto(atraccionesIncluidas.get(0).getCosto() + atraccionesIncluidas.get(1).getCosto());
 		super.setDuracion(atraccionesIncluidas.get(0).getDuracion() + atraccionesIncluidas.get(1).getDuracion() + atraccionesIncluidas.get(1).getDuracion());
 		super.setPromo(true);
 		this.atraccionesIncluidas= atraccionesIncluidas;
+		this.idPromocion = idPromocion;
 	}
 
 	@Override

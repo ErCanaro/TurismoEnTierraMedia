@@ -15,7 +15,7 @@ public class Usuario {
 	private double tiempoDisponible;
 	private TipoAtraccion preferencia;
 	private Posicion posicion;
-	private ArrayList<Atraccion> historialDeAtracciones = new ArrayList<Atraccion>(); // Cambio visibilidad ver si rompe
+	private ArrayList<Atraccion> historialDeAtracciones = new ArrayList<Atraccion>();
 	private ArrayList<Producto> itinerario = new ArrayList<Producto>();
 
 
@@ -35,47 +35,16 @@ public class Usuario {
 		this.posicion = posicion;
 	}
 
-	public void setPresupuesto(int presupuesto) {
-		this.presupuesto = presupuesto;
-	}
 
-	public ArrayList<Atraccion> getHistorialDeAtracciones() {
-		return this.historialDeAtracciones;
-	}
-
-	public String getNombre() {
-		return this.nombre;
-	}
-
-	public TipoAtraccion getPreferencia() {
-		return this.preferencia;
-	}
-
-	public int getPresupuesto() {
-		return this.presupuesto;
-	}
-
-	public double getTiempoDisponible() {
-		return this.tiempoDisponible;
-	}
-
-	public ArrayList<Atraccion> getHistorialDeProductos() {
-		return this.historialDeAtracciones;
-	}
-
-	public ArrayList<Producto> getItinerario() {
-		return this.itinerario;
-	}
 
 	public void aceptarSugerencia(Producto sugerencia) {
 		UsuarioDAO usuarioDAO = DAOFactory.getUsuarioDAO(); 
 		AtraccionDAO atraccionDAO = DAOFactory.getAtraccionDAO();
 		ItinerarioDAO itinerarioDAO = DAOFactory.getItinerarioDAO();
-		Itinerario nvoItinerario = null;
-		
-		
+			
 		if (this.presupuesto >= sugerencia.getCosto() && this.tiempoDisponible >= sugerencia.getDuracion()
 				&& sugerencia.getCupo() > 0 && !this.historialDeAtracciones.contains(sugerencia)) {
+			
 			this.itinerario.add(sugerencia);
 			this.historialDeAtracciones.addAll(sugerencia.getAtraccionesIncluidas());
 			this.tiempoDisponible -= sugerencia.getDuracion();
@@ -85,30 +54,17 @@ public class Usuario {
 				atr.restarCupo();
 				atraccionDAO.actualizarCupo(atr);
 			}
-		
-			/*
-			long idItinerario = 0;
-			if (this.itinerario.isEmpty()) {
-				nvoItinerario = new Itinerario (this.IdUsuario, sugerencia.getCosto(), sugerencia.getDuracion());
-				itinerarioDAO.insertar(nvoItinerario);
-				idItinerario = itinerarioDAO.obtenerIDItinerarioPorIdUsuario(this.IdUsuario);
-				nvoItinerario.setIdItinerario(idItinerario);
-			}else {
-				idItinerario = itinerarioDAO.obtenerIDItinerarioPorIdUsuario(this.IdUsuario);
-			}
-			
-			for (Atraccion atraccion : sugerencia.getAtraccionesIncluidas()) {
-				itinerarioDAO.insertarItemItinerario(idItinerario, atraccion.getIdAtraccion());
-			}
-			*/
-			
 			usuarioDAO.actualizar(this);
-			
-
+			if(sugerencia.esPromo()) {
+				itinerarioDAO.insertarItemItinerario(this.IdUsuario, sugerencia.getIdProducto(), "promocion");	
+			}else {
+				itinerarioDAO.insertarItemItinerario(this.IdUsuario, sugerencia.getIdProducto(), "atraccion");
+			}
 		}
-
 	}
 
+
+	
 	public void itinerarioToString() {
 		int costoTotal = 0;
 		double duracionTotal = 0;
@@ -141,17 +97,23 @@ public class Usuario {
 
 	}
 
+	
+	
 	@Override
 	public String toString() {
 		return "Nombre: " + nombre + ", Preferencia: " + preferencia + ", Presupuesto: " + presupuesto
 				+ ", Tiempo Disponible: " + tiempoDisponible;
 	}
 
+
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(nombre);
 	}
 
+	
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -164,6 +126,8 @@ public class Usuario {
 		return Objects.equals(nombre, other.nombre);
 	}
 
+	
+	
 	public Long getIdUsuario() {
 		return this.IdUsuario;
 	}
@@ -174,6 +138,46 @@ public class Usuario {
 
 	public double getPosY() {
 		return this.posicion.getY();
+	}
+	
+	public void setPresupuesto(int presupuesto) {
+		this.presupuesto = presupuesto;
+	}
+
+	public ArrayList<Atraccion> getHistorialDeAtracciones() {
+		return this.historialDeAtracciones;
+	}
+
+	public String getNombre() {
+		return this.nombre;
+	}
+
+	public TipoAtraccion getPreferencia() {
+		return this.preferencia;
+	}
+
+	public int getPresupuesto() {
+		return this.presupuesto;
+	}
+
+	public double getTiempoDisponible() {
+		return this.tiempoDisponible;
+	}
+
+	public ArrayList<Atraccion> getHistorialDeProductos() {
+		return this.historialDeAtracciones;
+	}
+
+	public void setHistorialDeAtracciones(ArrayList<Atraccion> historialDeAtracciones) {
+		this.historialDeAtracciones = historialDeAtracciones;
+	}
+
+	public void setItinerario(ArrayList<Producto> itinerario) {
+		this.itinerario = itinerario;
+	}
+
+	public ArrayList<Producto> getItinerario() {
+		return this.itinerario;
 	}
 
 }

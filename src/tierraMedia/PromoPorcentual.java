@@ -3,6 +3,7 @@ package tierraMedia;
 import java.util.ArrayList;
 
 public class PromoPorcentual extends Producto {
+	private long idPromocion;
 	private int porcentajeDcto;
 
 	public PromoPorcentual(String nombre, TipoAtraccion tipo, Atraccion a1, Atraccion a2, int porcentajeDcto) {
@@ -14,13 +15,14 @@ public class PromoPorcentual extends Producto {
 		this.atraccionesIncluidas.add(a2);
 	}
 
-	public PromoPorcentual(String nombre, TipoAtraccion tipoAtraccion, ArrayList<Atraccion> atraccionesIncluidas,
-			int descuentoPorcentual) {
-		super(nombre, tipoAtraccion, 0, 0);
+	public PromoPorcentual(long idPromocion, String nombre, TipoAtraccion tipoAtraccion, ArrayList<Atraccion> atraccionesIncluidas,
+		int descuentoPorcentual) {
+		super(idPromocion, nombre, tipoAtraccion, 0, 0);
 		super.setCosto((atraccionesIncluidas.get(0).getCosto() + atraccionesIncluidas.get(1).getCosto()) * (100 - porcentajeDcto) / 100);// Revisar que calcule bien
 		super.setDuracion(atraccionesIncluidas.get(0).getDuracion() + atraccionesIncluidas.get(1).getDuracion());
 		super.setPromo(true);
 		this.atraccionesIncluidas= atraccionesIncluidas;
+		this.idPromocion = idPromocion;
 		
 	}
 

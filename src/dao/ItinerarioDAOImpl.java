@@ -9,56 +9,12 @@ import java.util.ArrayList;
 import jdbc.ProveedorDeConeccion;
 import tierraMedia.Atraccion;
 import tierraMedia.Itinerario;
+import tierraMedia.Producto;
 import tierraMedia.Usuario;
 
 public class ItinerarioDAOImpl implements ItinerarioDAO {
 
 
-	@Override
-	public ArrayList<Itinerario> buscarTodos() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int contarTodos() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int insertar(Itinerario t) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int actualizar(Itinerario t) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int borrar(Itinerario t) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	
-	@Override
-	public Itinerario buscarPorIdItinerario(Long IdItinerario) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-
-	@Override
-	public int agregarItemItinerario(Atraccion atraccion) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public long obtenerIDItinerarioPorIdUsuario(Long idUsuario) {
 		long id = 0;
 		try {
@@ -68,7 +24,7 @@ public class ItinerarioDAOImpl implements ItinerarioDAO {
 			statement.setLong(1, idUsuario);
 			ResultSet resultados = statement.executeQuery();
 
-			Usuario user = null;
+			//Usuario user = null;
 
 			if (resultados.next()) {
 				id = resultados.getLong(1);
@@ -80,20 +36,19 @@ public class ItinerarioDAOImpl implements ItinerarioDAO {
 		
 	}
 	
-	private Usuario toItinerario(ResultSet resultados) throws SQLException {
 
-		return null;
-	}
-
-	@Override
-	public int insertarItemItinerario(long idItinerario, long idAtraccion) {
+	
+	public int insertarItemItinerario(long  IdUsuario, long IdProducto, String tipo) {
+		
 		try {
-			String sql = "INSERT INTO AtraccionesDelItinerario (ID_itinerario, ID_Atraccion) VALUES (?, ?)";
+	
+			String sql = "INSERT INTO Item_Itinerario (id_usuario, id_producto, tipo_producto ) VALUES (?, ?, ?)";
 			Connection conn = ProveedorDeConeccion.getConnection();
 
 			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setLong(1, idItinerario);
-			statement.setLong(2, idAtraccion);
+			statement.setLong(1, IdUsuario);
+			statement.setLong(2, IdProducto);
+			statement.setString(3, tipo);
 
 			int rows = statement.executeUpdate();
 			return rows;
@@ -101,6 +56,48 @@ public class ItinerarioDAOImpl implements ItinerarioDAO {
 		} catch (Exception e) {
 			throw new MissingDataException(e);
 		}
+	}
+	
+
+
+
+	private String obtenerTipo() {
+		return null;
+	}
+
+
+
+	@Override
+	public ArrayList<Producto> buscarTodos() {
+		return null;
+	}
+
+
+
+	@Override
+	public int contarTodos() {
+		return 0;
+	}
+
+
+
+	@Override
+	public int insertar(Producto t) {
+		return 0;
+	}
+
+
+
+	@Override
+	public int actualizar(Producto t) {
+		return 0;
+	}
+
+
+
+	@Override
+	public int borrar(Producto t) {
+		return 0;
 	}
 
 }

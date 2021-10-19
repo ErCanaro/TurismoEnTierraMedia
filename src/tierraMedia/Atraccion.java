@@ -11,8 +11,8 @@ public class Atraccion extends Producto {
 		this.atraccionesIncluidas.add(this);
 	}
 	
-	public Atraccion(long idAtraccion, String nombre, TipoAtraccion tipo, int costo, double duracion, int cupo, Posicion ubicacion ) {
-		super(nombre, tipo, costo, duracion);
+	public Atraccion(long idAtraccion, String nombre, TipoAtraccion tipo, double costo, double duracion, int cupo, Posicion ubicacion ) {
+		super(idAtraccion, nombre, tipo, costo, duracion);
 		this.cupo = cupo;
 		this.atraccionesIncluidas.add(this);
 		this.idAtraccion = idAtraccion;
@@ -55,12 +55,5 @@ public class Atraccion extends Producto {
 		return this.ubicacion.getY();
 	}
 	
-	/*
-	@Override
-	public String toString() {
-		return "-->Nombre: " + super.getNombre();
-	}
-	*/
- 
-
+	
 }

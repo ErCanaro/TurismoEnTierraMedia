@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public abstract class Producto {
+	private long IdProducto;
 	private String nombre;
 	private TipoAtraccion tipo;
 	private int costo;
@@ -16,6 +17,21 @@ public abstract class Producto {
 		this.tipo = tipo;
 		this.costo = costo;
 		this.duracion = duracion;
+	}
+
+	public Producto(long id, String nombre, TipoAtraccion tipo, double costo, double duracion) {
+		this.nombre = nombre;
+		this.tipo = tipo;
+		this.costo = (int)costo;
+		this.duracion = duracion;
+		this.IdProducto = id;
+	}
+
+	
+	
+	
+	public long getIdProducto() {
+		return IdProducto;
 	}
 
 	public ArrayList<Atraccion> getAtraccionesIncluidas() {
