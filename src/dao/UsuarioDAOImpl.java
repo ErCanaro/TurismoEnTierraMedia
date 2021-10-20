@@ -11,7 +11,9 @@ import java.util.List;
 
 
 import jdbc.ProveedorDeConeccion;
+import tierraMedia.Atraccion;
 import tierraMedia.Posicion;
+import tierraMedia.Producto;
 import tierraMedia.TipoAtraccion;
 import tierraMedia.Usuario;
 import tierraMedia.TipoAtraccion;
@@ -23,7 +25,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		try {
 			String sql = "INSERT INTO USUARIOS (NOMBRE, DINERO, TIEMPO, POSX, POSY, ID_TIPO_ATRACCION) VALUES (?, ?, ?, ?, ?, ?)";
 			Connection conn = ProveedorDeConeccion.getConnection();
-
 			PreparedStatement statement = conn.prepareStatement(sql);
 			//TIPO DE LA BD (TEXTO nombre, TEXTO TipoAtraccion, INTEGER presupuesto, REAL tiempoDisponible)
 			statement.setString(1, usuario.getNombre());
@@ -47,7 +48,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		try {
 			String sql = "UPDATE USUARIOS SET Nombre = ?, dinero = ?, tiempo = ?, PosX = ?, PosY = ? WHERE id_usuario = ?";
 			Connection conn = ProveedorDeConeccion.getConnection();
-
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setString(1, usuario.getNombre());
 			statement.setInt(2, usuario.getPresupuesto());
@@ -135,7 +135,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 					+ "FROM Usuarios INNER JOIN Tipos_atraccion "
 					+ "ON Usuarios.id_tipo_atraccion = Tipos_atraccion.id_tipo_atraccion";
 
-			Connection conn = DriverManager.getConnection("jdbc:Sqlite:TierraMediaBD.db");
+			Connection conn = ProveedorDeConeccion.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql);
 			ResultSet resultados = statement.executeQuery();
 
@@ -162,15 +162,14 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		double posY = resultados.getInt(6);
 		tierraMedia.TipoAtraccion preferencia =  TipoAtraccion.valueOf(resultados.getString(7).toUpperCase());
 		Usuario usuario = new Usuario(idUsuario, nombre , dinero, tiempo, new Posicion(posX, posY), preferencia);
-		// ------------ FALTA HACER ---------------
-		//usuario.setItinerario(recuperarItinerarioDelUsuario(idUsuario));
-		//usuario.setHistorialDeAtracciones(recuperarHistorialDelUsuario(usuario.getItinerario()));
+		
+		ItinerarioDAO itinerarioDAO = DAOFactory.getItinerarioDAO();
+		itinerarioDAO.itinerarioeHistorialDelUsuario(usuario);
 		
 		return usuario;
-		
-	
-		
 	}
-
+	
+	
+	
 	
 }

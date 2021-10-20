@@ -50,7 +50,24 @@ public class TierraMedia {
 
 		this.productosDB.addAll(this.atraccionesDB);
 		this.productosDB.addAll(this.promocionesDB);
-
+		
+		
+		
+		// ----------------  BORRAR  ------------------------------
+		for (Usuario usuario : usuariosDB)
+			System.out.println(usuario.getItinerario());
+		
+		System.out.println("---------------------------------");
+		System.out.println("---------------------------------");
+		System.out.println("---------------------------------");
+		
+		for (Usuario usuario : usuariosDB)
+			System.out.println(usuario.getHistorialDeAtracciones());
+		
+		//-------------------  FIN BORRAR -----------------------------
+		
+		
+		
 		//Archivo archivo = new Archivo();
 		//archivo.crearAtraccionesDesdeArchivo();
 		//archivo.crearPromocionesDesdeArchivos();
@@ -71,24 +88,32 @@ public class TierraMedia {
 	public ArrayList<Producto> ordenarSugerencia(Usuario usuario) {
 		ArrayList<Producto> sugerencia = new ArrayList<Producto>();
 		ArrayList<Producto> noPreferidas = new ArrayList<Producto>();
-
+		
+		
+		//System.out.println("------------------------------------------------------"); //////////////////
+		//System.out.println("------------------------------------------------------"); //////////////////
+		//System.out.println("------------------------------------------------------"); //////////////////
 		for (Producto prod : this.productosDB) {
+		//	System.out.println("---> "+ prod); //////////////////
 			int aux = 0;
 			for (Atraccion atr : prod.getAtraccionesIncluidas()) {
 				if (usuario.getHistorialDeAtracciones().contains(atr)) {
 					aux++;
+		//			System.out.println("---> "+ atr +  "esta en el historial"); //////////////////
 				}
 			}
 			if (prod.getCosto() <= usuario.getPresupuesto() && prod.getDuracion() <= usuario.getTiempoDisponible()
 					&& prod.getCupo() > 0 && aux == 0) {
 				if (prod.getTipo() == usuario.getPreferencia()) {
 					sugerencia.add(prod);
+		//			System.out.println("---> "+ prod +  "agregado a preferidos"); //////////////////
 				} else {
 					noPreferidas.add(prod);
+		//			System.out.println("---> "+ prod +  "agregado a NO  preferidos"); //////////////////
 				}
 			}
 		}
-
+		
 		Comparator<Producto> ordenarSugerencia = Comparator.comparing(Producto::esPromo)
 				.thenComparing(Producto::getCosto).thenComparing(Producto::getDuracion)
 				.thenComparing(Producto::getNombre);
@@ -96,6 +121,7 @@ public class TierraMedia {
 		Collections.sort(noPreferidas, ordenarSugerencia.reversed());
 
 		sugerencia.addAll(noPreferidas);
+		
 		return sugerencia;
 	}
 
@@ -142,11 +168,13 @@ public class TierraMedia {
 			if (eleccion1 == 0) {
 				break;
 			} else if (eleccion1 > 0 && eleccion1 <= ordenarSugerencia(usr).size()) {
+				
 				usr.aceptarSugerencia(ordenarSugerencia(usr).get(eleccion1 - 1));
-
+				
 			}
 
 		} while (ordenarSugerencia(usr).size() > 0);
+		
 	}
 
 	/**
@@ -270,8 +298,8 @@ public class TierraMedia {
 	 * Imprime los Itinerarios de cada uno de los usuarios de la colección.
 	 */
 	public void imprimirTodosLosItinerarios() {
-		for (Usuario user : this.usuariosDB) {
-			imprimirItinerarioEnArchivo(user);
+		for (Usuario user : this.usuariosDB) {    
+			imprimirItinerarioEnArchivo(user); 
 		}
 	}
 	

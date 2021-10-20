@@ -24,7 +24,7 @@ public class AtraccionDAOImpl implements AtraccionDAO {
 					+ " FROM Atracciones INNER JOIN Tipos_atraccion "  
 					+ " ON Atracciones.id_tipo_atraccion = Tipos_atraccion.id_tipo_atraccion";
 
-			Connection conn = DriverManager.getConnection("jdbc:Sqlite:TierraMediaBD.db");
+			Connection conn = ProveedorDeConeccion.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql);
 			ResultSet resultados = statement.executeQuery();
 
@@ -87,12 +87,11 @@ public class AtraccionDAOImpl implements AtraccionDAO {
 	
 	@Override
 	public int actualizar(Atraccion atraccion) {
-		 // Columnas: Id_Atracciones, Nombre, Cupo, Precio, Duracion, PosX, PosY, id_tipo_atraccion
 		try {
 			String sql = "UPDATE atracciones SET Nombre = ?, cupo = ?, precio = ?, duracion = ?  WHERE id_atracciones = ?";
 			Connection conn = ProveedorDeConeccion.getConnection();
-
 			PreparedStatement statement = conn.prepareStatement(sql);
+			//  orden de la tupla: Nombre, Cupo, Precio, Duracion, PosX, PosY, id_tipo_atraccion
 			statement.setString(1, atraccion.getNombre());
 			statement.setInt(2, atraccion.getCupo());
 			statement.setDouble(3, atraccion.getCosto());
@@ -109,8 +108,9 @@ public class AtraccionDAOImpl implements AtraccionDAO {
 		}
 	}
 	
+	
+	
 	public int actualizarCupo(Atraccion atraccion) {
-		 // Columnas: Id_Atracciones, Nombre, Cupo, Precio, Duracion, PosX, PosY, id_tipo_atraccion
 		try {
 			String sql = "UPDATE atracciones SET cupo = ? WHERE id_atracciones = ?";
 			Connection conn = ProveedorDeConeccion.getConnection();

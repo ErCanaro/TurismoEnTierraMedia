@@ -63,8 +63,19 @@ public class Usuario {
 		}
 	}
 
-
 	
+	
+	public ArrayList <Atraccion> atraccionesDelItinerario(){
+		ArrayList <Atraccion> atracciones = new ArrayList <Atraccion>();
+		
+		for (Producto producto : this.itinerario) {
+			atracciones.addAll(producto.getAtraccionesIncluidas());
+		}
+		
+		return atracciones;
+	}
+	
+
 	public void itinerarioToString() {
 		int costoTotal = 0;
 		double duracionTotal = 0;
@@ -125,8 +136,6 @@ public class Usuario {
 		Usuario other = (Usuario) obj;
 		return Objects.equals(nombre, other.nombre);
 	}
-
-	
 	
 	public Long getIdUsuario() {
 		return this.IdUsuario;

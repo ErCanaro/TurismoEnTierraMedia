@@ -7,12 +7,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import jdbc.ProveedorDeConeccion;
 import tierraMedia.Atraccion;
 import tierraMedia.Producto;
 import tierraMedia.PromoPorcentual;
 import tierraMedia.PromocionAbsoluta;
 import tierraMedia.PromocionAxB;
 import tierraMedia.TipoAtraccion;
+import tierraMedia.Usuario;
 
 public class PromocionDAOImpl implements PromocionDAO {
 
@@ -20,7 +22,7 @@ public class PromocionDAOImpl implements PromocionDAO {
 	public ArrayList<Producto> buscarTodos() {
 		try {
 			String sql = "select id_promocion, nombre, precio, descuento, tipo_atraccion, id_tipo_promocion from Promociones";
-			Connection conn = DriverManager.getConnection("jdbc:Sqlite:TierraMediaBD.db");
+			Connection conn = ProveedorDeConeccion.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql);
 			ResultSet resultados = statement.executeQuery();
 			
@@ -31,6 +33,28 @@ public class PromocionDAOImpl implements PromocionDAO {
 				producto.add(toProducto(resultados));
 			}
 		
+			return producto;
+		} catch (Exception e) {
+			throw new MissingDataException(e);
+		}
+	}
+	
+		
+	@Override
+	public Producto buscarPorIdPromocion(Long id) {
+		try {
+			String sql = "select id_promocion, nombre, precio, descuento, tipo_atraccion, id_tipo_promocion from Promociones where id_promocion = ?";
+			Connection conn = ProveedorDeConeccion.getConnection();
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setLong(1, id);
+			ResultSet resultados = statement.executeQuery();
+			
+			Producto producto = null;
+
+			if (resultados.next()) {
+				producto = toProducto(resultados);
+			}
+
 			return producto;
 		} catch (Exception e) {
 			throw new MissingDataException(e);
@@ -67,7 +91,7 @@ public class PromocionDAOImpl implements PromocionDAO {
 			String sql = "select AtraccionesDeLaPromocion.ID_Atraccon "
 					+ "from AtraccionesDeLaPromocion "
 					+ "where AtraccionesDeLaPromocion.ID_Promocion = ?";
-			Connection conn = DriverManager.getConnection("jdbc:Sqlite:TierraMediaBD.db");
+			Connection conn = ProveedorDeConeccion.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setLong(1, resultados.getLong(1));
 			ResultSet result = statement.executeQuery();
@@ -86,6 +110,9 @@ public class PromocionDAOImpl implements PromocionDAO {
 	}
 
 
+	
+	
+
 	@Override
 	public int insertar(Producto t) {
 		return 0;
@@ -101,12 +128,6 @@ public class PromocionDAOImpl implements PromocionDAO {
 	@Override
 	public int borrar(Producto t) {
 		return 0;
-	}
-
-
-	@Override
-	public Producto buscarPorIdAtraccion(Long id) {
-		return null;
 	}
 
 
