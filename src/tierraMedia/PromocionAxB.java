@@ -16,10 +16,10 @@ public class PromocionAxB extends Producto {
 	}
 
 
-	public PromocionAxB(long idPromocion, String nombre, TipoAtraccion tipoAtraccion, ArrayList<Atraccion> atraccionesIncluidas) {
-		super(idPromocion, nombre, tipoAtraccion, 0, 0);
-		super.setCosto(atraccionesIncluidas.get(0).getCosto() + atraccionesIncluidas.get(1).getCosto());
-		super.setDuracion(atraccionesIncluidas.get(0).getDuracion() + atraccionesIncluidas.get(1).getDuracion() + atraccionesIncluidas.get(1).getDuracion());
+	public PromocionAxB(long idPromocion, String nombre, TipoAtraccion tipoAtraccion, ArrayList<Atraccion> atraccionesIncluidas , int costo, double duracion) {
+		super(idPromocion, nombre, tipoAtraccion, costo, duracion);
+		//super.setCosto(atraccionesIncluidas.get(0).getCosto() + atraccionesIncluidas.get(1).getCosto());
+		//super.setDuracion(atraccionesIncluidas.get(0).getDuracion() + atraccionesIncluidas.get(1).getDuracion() + atraccionesIncluidas.get(1).getDuracion());
 		super.setPromo(true);
 		this.atraccionesIncluidas= atraccionesIncluidas;
 		this.idPromocion = idPromocion;

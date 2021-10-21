@@ -15,11 +15,10 @@ public class PromoPorcentual extends Producto {
 		this.atraccionesIncluidas.add(a2);
 	}
 
-	public PromoPorcentual(long idPromocion, String nombre, TipoAtraccion tipoAtraccion, ArrayList<Atraccion> atraccionesIncluidas,
-		int descuentoPorcentual) {
-		super(idPromocion, nombre, tipoAtraccion, 0, 0);
-		super.setCosto((atraccionesIncluidas.get(0).getCosto() + atraccionesIncluidas.get(1).getCosto()) * (100 - porcentajeDcto) / 100);// Revisar que calcule bien
-		super.setDuracion(atraccionesIncluidas.get(0).getDuracion() + atraccionesIncluidas.get(1).getDuracion());
+	public PromoPorcentual(long idPromocion, String nombre, TipoAtraccion tipoAtraccion, ArrayList<Atraccion> atraccionesIncluidas,	int descuentoPorcentual, int costo, double duracion) {
+		super(idPromocion, nombre, tipoAtraccion, costo, duracion);
+		//super.setCosto((atraccionesIncluidas.get(0).getCosto() + atraccionesIncluidas.get(1).getCosto()) * (100 - porcentajeDcto) / 100);// Revisar que calcule bien
+		//super.setDuracion(atraccionesIncluidas.get(0).getDuracion() + atraccionesIncluidas.get(1).getDuracion());
 		super.setPromo(true);
 		this.atraccionesIncluidas= atraccionesIncluidas;
 		this.idPromocion = idPromocion;

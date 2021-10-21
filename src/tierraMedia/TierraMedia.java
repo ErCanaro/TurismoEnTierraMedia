@@ -50,23 +50,7 @@ public class TierraMedia {
 
 		this.productosDB.addAll(this.atraccionesDB);
 		this.productosDB.addAll(this.promocionesDB);
-		
-		
-		
-		// ----------------  BORRAR  ------------------------------
-		for (Usuario usuario : usuariosDB)
-			System.out.println(usuario.getItinerario());
-		
-		System.out.println("---------------------------------");
-		System.out.println("---------------------------------");
-		System.out.println("---------------------------------");
-		
-		for (Usuario usuario : usuariosDB)
-			System.out.println(usuario.getHistorialDeAtracciones());
-		
-		//-------------------  FIN BORRAR -----------------------------
-		
-		
+	
 		
 		//Archivo archivo = new Archivo();
 		//archivo.crearAtraccionesDesdeArchivo();
@@ -90,26 +74,20 @@ public class TierraMedia {
 		ArrayList<Producto> noPreferidas = new ArrayList<Producto>();
 		
 		
-		//System.out.println("------------------------------------------------------"); //////////////////
-		//System.out.println("------------------------------------------------------"); //////////////////
-		//System.out.println("------------------------------------------------------"); //////////////////
 		for (Producto prod : this.productosDB) {
-		//	System.out.println("---> "+ prod); //////////////////
 			int aux = 0;
 			for (Atraccion atr : prod.getAtraccionesIncluidas()) {
 				if (usuario.getHistorialDeAtracciones().contains(atr)) {
 					aux++;
-		//			System.out.println("---> "+ atr +  "esta en el historial"); //////////////////
 				}
 			}
+
 			if (prod.getCosto() <= usuario.getPresupuesto() && prod.getDuracion() <= usuario.getTiempoDisponible()
 					&& prod.getCupo() > 0 && aux == 0) {
 				if (prod.getTipo() == usuario.getPreferencia()) {
 					sugerencia.add(prod);
-		//			System.out.println("---> "+ prod +  "agregado a preferidos"); //////////////////
 				} else {
 					noPreferidas.add(prod);
-		//			System.out.println("---> "+ prod +  "agregado a NO  preferidos"); //////////////////
 				}
 			}
 		}
@@ -134,7 +112,9 @@ public class TierraMedia {
 	public void crearOferta() {
 		Usuario usr = seleccionarUsuario();
 
-		mostrarOfertasPosibles(usr);
+		mostrarOfertasPosiblesVersion2(usr);
+		
+		//mostrarOfertasPosibles(usr);
 
 		usr.itinerarioToString();
 	}
@@ -176,6 +156,45 @@ public class TierraMedia {
 		} while (ordenarSugerencia(usr).size() > 0);
 		
 	}
+	
+	
+	
+	public void mostrarOfertasPosiblesVersion2(Usuario usr) {
+		ArrayList<Producto>listaDeOfertas = null;
+		do {
+			System.out.println("-----------------------------------------------------------------------");
+			System.out.println("Por favor, " + usr.getNombre() + " escoja una oferta");
+			System.out.println("Aún dispone de " + usr.getPresupuesto() + " Monedas y de " + usr.getTiempoDisponible()
+					+ " horas.");
+			System.out.println("-----------------------------------------------------------------------");
+			System.out.printf("%-6s%-22s%-14s%-8s%-10s%-7s%-10s\n", "Nro", "NOMBRE", "TIPO", "COSTO", "DURACION",
+					"CUPO", "INCLUYE");
+			listaDeOfertas = ordenarSugerencia(usr);
+			for (int i = 0; i < listaDeOfertas.size(); i++) {
+				System.out.printf("%-6s", i + 1 + "> ");
+				listaDeOfertas.get(i).mostrarPorPantalla();
+
+			}
+			System.out.println("-----------------------------------------------------------------------");
+			System.out.print("[0] Si no desea adquirir más ofertas ingrese 0(cero)");
+			;
+
+			int eleccion1 = sc.nextInt();
+
+			if (eleccion1 == 0) {
+				break;
+			} else if (eleccion1 > 0 && eleccion1 <= listaDeOfertas.size()) {
+				
+				usr.aceptarSugerencia(listaDeOfertas.get(eleccion1 - 1));
+				
+			}
+
+		} while (listaDeOfertas.size() > 0);
+		
+	}
+
+	
+	
 
 	/**
 	 * Método para seleccionar por consola un usuario de una lista.

@@ -14,10 +14,9 @@ public class PromocionAbsoluta extends Producto {
 	}
 
 
-	public PromocionAbsoluta(long idPromocion, String nombre, TipoAtraccion tipoAtraccion, ArrayList<Atraccion> atraccionesIncluidas,
-			int costo) {
-		super(idPromocion, nombre, tipoAtraccion, costo, 0);
-		super.setDuracion(atraccionesIncluidas.get(0).getDuracion() + atraccionesIncluidas.get(1).getDuracion());
+	public PromocionAbsoluta(long idPromocion, String nombre, TipoAtraccion tipoAtraccion, ArrayList<Atraccion> atraccionesIncluidas,int costo, double duracion) {
+		super(idPromocion, nombre, tipoAtraccion, costo, duracion);
+		//super.setDuracion(atraccionesIncluidas.get(0).getDuracion() + atraccionesIncluidas.get(1).getDuracion());
 		super.setPromo(true);
 		this.atraccionesIncluidas= atraccionesIncluidas;
 		this.idPromocion = idPromocion;	}

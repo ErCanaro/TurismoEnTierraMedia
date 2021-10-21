@@ -19,6 +19,7 @@ public abstract class Producto {
 		this.duracion = duracion;
 	}
 
+
 	public Producto(long id, String nombre, TipoAtraccion tipo, double costo, double duracion) {
 		this.nombre = nombre;
 		this.tipo = tipo;
@@ -27,9 +28,9 @@ public abstract class Producto {
 		this.IdProducto = id;
 	}
 
-	
-	
-	
+
+
+
 	public long getIdProducto() {
 		return IdProducto;
 	}

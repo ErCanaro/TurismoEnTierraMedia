@@ -66,26 +66,35 @@ public class PromocionDAOImpl implements PromocionDAO {
 		// COLUMNAS DEL RESULTSET:  ID_promoCIONES  NOMBRE  PRECIO  DESCUENTO   TIPO_ATRACCION   ID_TIPO_PROMOCION
 		Long   idPromocion         = resultados.getLong(1);
 		String nombre              = resultados.getString(2);
-		int    costoAbsoluto       = resultados.getInt(3);
+		int    costo       = resultados.getInt(3);
 		int    descuentoPorcentual = resultados.getInt(4);
 		TipoAtraccion tipoAtraccion =  TipoAtraccion.valueOf(resultados.getString(5));
 		int    tipoPromo           = resultados.getInt(6);
 	
 		ArrayList<Atraccion> atraccionesIncluidas = atraccionesDeLaPromocion(resultados);
-
+		double duracion =  obtenerDuracionDelaPromocion(atraccionesIncluidas);
 		Producto producto = null;
 		if (tipoPromo == 1) {
-			producto = new PromocionAxB(idPromocion, nombre, tipoAtraccion, atraccionesIncluidas);
+			producto = new PromocionAxB(idPromocion, nombre, tipoAtraccion, atraccionesIncluidas, costo, duracion);
 		} else if (tipoPromo == 2) {
-			producto = new PromoPorcentual(idPromocion, nombre, tipoAtraccion, atraccionesIncluidas, descuentoPorcentual);
+			producto = new PromoPorcentual(idPromocion, nombre, tipoAtraccion, atraccionesIncluidas, descuentoPorcentual, costo, duracion);
 		} else if (tipoPromo == 3) {
-			producto = new PromocionAbsoluta(idPromocion, nombre, tipoAtraccion, atraccionesIncluidas, costoAbsoluto);
+			producto = new PromocionAbsoluta(idPromocion, nombre, tipoAtraccion, atraccionesIncluidas, costo, duracion);
 		}
 		
 		return producto;
 	}
 	
 	
+	private double obtenerDuracionDelaPromocion(ArrayList<Atraccion> atraccionesIncluidas) {
+		double duracion = 0;
+		for (Atraccion atraccion : atraccionesIncluidas) {
+			duracion += atraccion.getDuracion();
+		}
+		return duracion;
+	}
+
+
 	private ArrayList<Atraccion> atraccionesDeLaPromocion(ResultSet resultados) throws SQLException {
 		try {
 			String sql = "select AtraccionesDeLaPromocion.ID_Atraccon "
