@@ -32,7 +32,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			statement.setDouble(3, usuario.getTiempoDisponible());
 			statement.setDouble(4, usuario.getPosX());
 			statement.setDouble(5, usuario.getPosY());
-			statement.setString(6, usuario.getPreferencia().toString());
+			statement.setLong(6, obtegerIdTipoAtraccion(usuario));
 
 			int rows = statement.executeUpdate();
 
@@ -43,10 +43,23 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		
 	}
 
+
+	private long obtegerIdTipoAtraccion(Usuario usuario) {
+		long id = 0;
+		TipoAtraccion preferencia =  usuario.getPreferencia();
+		switch(preferencia) {
+			case AVENTURA:    id = 1; 	break;
+			case PAISAJES:    id = 2; 	break;
+			case DEGUSTACION: id = 3; 	break;
+		}
+		return id;
+	}
+
+
 	public int actualizar(Usuario usuario) {
 		
 		try {
-			String sql = "UPDATE USUARIOS SET Nombre = ?, dinero = ?, tiempo = ?, PosX = ?, PosY = ? WHERE id_usuario = ?";
+			String sql = "UPDATE USUARIOS SET Nombre = ?, dinero = ?, tiempo = ?, PosX = ?, PosY = ?, id_tipo_atraccion = ? WHERE id_usuario = ?";
 			Connection conn = ProveedorDeConeccion.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setString(1, usuario.getNombre());
@@ -54,8 +67,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			statement.setDouble(3, usuario.getTiempoDisponible());
 			statement.setDouble(4, usuario.getPosX()); 
 			statement.setDouble(5, usuario.getPosY()); 
-			//statement.setString( ? , TipoAtraccion.values(usuario.getPreferencia()) );  
-			statement.setLong(6, usuario.getIdUsuario());
+			statement.setLong(6, obtegerIdTipoAtraccion(usuario)); 
+			statement.setLong(7, usuario.getIdUsuario());
 			int rows = statement.executeUpdate();
 
 			return rows;
@@ -83,7 +96,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		
 	}
 
-	public Usuario buscarPorIdUsuario(String idUsuario) {
+	public Usuario buscarPorIdUsuario(long idUsuario) {
 		try {
 			String sql = "SELECT Usuarios.id_usuario, Usuarios.nombre, Usuarios.dinero, " 
 					+ "Usuarios.tiempo, Usuarios.PosX, Usuarios.PosY, Tipos_atraccion.Descripcion_tipo_atraccion "
@@ -92,7 +105,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 					+ "WHERE id_usuario = ?";
 			Connection conn = ProveedorDeConeccion.getConnection();
 			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setString(1, idUsuario);
+			statement.setLong(1, idUsuario);
 			ResultSet resultados = statement.executeQuery();
 
 			Usuario user = null;
