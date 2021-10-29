@@ -32,7 +32,7 @@ public class PromocionDAOImpl implements PromocionDAO {
 				
 				producto.add(toProducto(resultados));
 			}
-		
+			statement.close();
 			return producto;
 		} catch (Exception e) {
 			throw new MissingDataException(e);
@@ -54,7 +54,7 @@ public class PromocionDAOImpl implements PromocionDAO {
 			if (resultados.next()) {
 				producto = toProducto(resultados);
 			}
-
+			statement.close();
 			return producto;
 		} catch (Exception e) {
 			throw new MissingDataException(e);
@@ -111,7 +111,7 @@ public class PromocionDAOImpl implements PromocionDAO {
 			while (result.next()) {
 				producto.add(atraccionDAO.buscarPorIdAtraccion(result.getLong(1)));
 			}
-		
+			statement.close();
 			return producto;
 		} catch (Exception e) {
 			throw new MissingDataException(e);

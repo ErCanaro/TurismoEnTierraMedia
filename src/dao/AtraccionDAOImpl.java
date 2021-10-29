@@ -32,7 +32,7 @@ public class AtraccionDAOImpl implements AtraccionDAO {
 			while (resultados.next()) {
 				atracciones.add(toAtraccion(resultados));
 			}
-		
+			statement.close();
 			return atracciones;
 		} catch (Exception e) {
 			throw new MissingDataException(e);
@@ -77,7 +77,7 @@ public class AtraccionDAOImpl implements AtraccionDAO {
 			if (resultados.next()) {
 				atraccion = toAtraccion(resultados);
 			}
-
+			statement.close();
 			return atraccion;
 		} catch (Exception e) {
 			throw new MissingDataException(e);
@@ -101,7 +101,8 @@ public class AtraccionDAOImpl implements AtraccionDAO {
 			//statement.setString(6, usuario.getPreferencia().toString()); 
 			statement.setLong(5, atraccion.getIdAtraccion());
 			int rows = statement.executeUpdate();
-
+			
+			statement.close();
 			return rows;
 		} catch (Exception e) {
 			throw new MissingDataException(e);
@@ -121,6 +122,7 @@ public class AtraccionDAOImpl implements AtraccionDAO {
 			
 			int rows = statement.executeUpdate();
 
+			statement.close();
 			return rows;
 		} catch (Exception e) {
 			throw new MissingDataException(e);

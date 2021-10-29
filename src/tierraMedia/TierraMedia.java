@@ -13,6 +13,7 @@ import dao.AtraccionDAO;
 import dao.DAOFactory;
 import dao.PromocionDAO;
 import dao.UsuarioDAO;
+import jdbc.ProveedorDeConeccion;
 
 public class TierraMedia {
 
@@ -378,6 +379,7 @@ public class TierraMedia {
 				break;
 			case 4:
 				System.out.println("Programa Terminado!");
+				ProveedorDeConeccion.closeConnection();
 				System.exit(0);
 				break;
 			default:

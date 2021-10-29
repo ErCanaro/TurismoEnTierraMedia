@@ -56,9 +56,9 @@ public class Usuario {
 			}
 			usuarioDAO.actualizar(this);
 			if(sugerencia.esPromo()) {
-				itinerarioDAO.insertarItemItinerario(this.IdUsuario, sugerencia.getIdProducto(), "promocion");	
+				itinerarioDAO.insertarItemItinerario(this.IdUsuario, sugerencia.getIdProducto(), 2);	
 			}else {
-				itinerarioDAO.insertarItemItinerario(this.IdUsuario, sugerencia.getIdProducto(), "atraccion");
+				itinerarioDAO.insertarItemItinerario(this.IdUsuario, sugerencia.getIdProducto(), 1);
 			}
 		}
 	}
