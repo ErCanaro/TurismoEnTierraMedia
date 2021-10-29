@@ -36,6 +36,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 			int rows = statement.executeUpdate();
 
+			statement.close();
 			return rows;
 		} catch (Exception e) {
 			throw new MissingDataException(e);
@@ -71,6 +72,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			statement.setLong(7, usuario.getIdUsuario());
 			int rows = statement.executeUpdate();
 
+			statement.close();
 			return rows;
 		} catch (Exception e) {
 			throw new MissingDataException(e);
@@ -89,6 +91,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			statement.setLong(1, usuario.getIdUsuario());
 			int rows = statement.executeUpdate();
 
+			statement.close();
 			return rows;
 		} catch (Exception e) {
 			throw new MissingDataException(e);
@@ -114,6 +117,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 				user = toUsuario(resultados);
 			}
 
+			statement.close();
 			return user;
 		} catch (Exception e) {
 			throw new MissingDataException(e);
@@ -131,7 +135,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 			resultados.next();
 			int total = resultados.getInt("TOTAL");
-
+			
+			statement.close();
 			return total;
 		} catch (Exception e) {
 			throw new MissingDataException(e);
@@ -157,6 +162,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 				usuarios.add(toUsuario(resultados));
 			}
 
+			statement.close();
 			return usuarios;
 		} catch (Exception e) {
 			throw new MissingDataException(e);
