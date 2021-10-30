@@ -23,9 +23,6 @@ import tierraMedia.Usuario;
 public class DataBaseTest {
 
 	private void inicializarBD() throws SQLException {
-//		ProveedorDeConeccion.closeConnection();
-		ProveedorDeConeccion.getConnection();
-		
 		ProveedorDeConeccion.insertarDatosDePruebaEnLaBD();
 	}
 	
@@ -39,6 +36,10 @@ public class DataBaseTest {
 		inicializarBD();
 	}
 	
+	//Correr los test reinicia la base de datos.
+	//La base de datos de los test, es compartida con la de la app.
+	//Cada test reinicia la base de datos, por eso el proceso es lento.
+	
 	@Test
 	public void queAlConsultarUnUsuarioDevuelvaTodosSusDatos() {
 		UsuarioDAO usuarioDAO = DAOFactory.getUsuarioDAO();
@@ -48,7 +49,6 @@ public class DataBaseTest {
 		assertEquals(90, usuarioDAO.buscarPorIdUsuario(1).getPresupuesto());
 		assertEquals(1, usuarioDAO.buscarPorIdUsuario(1).getPosX(), 0);
 		assertEquals(2, usuarioDAO.buscarPorIdUsuario(1).getPosY(), 0);
-		
 	}
 	
 	
@@ -61,12 +61,11 @@ public class DataBaseTest {
 		assertEquals(10, atraccionDAO.buscarPorIdAtraccion((long)1).getCosto());
 		assertEquals(46, atraccionDAO.buscarPorIdAtraccion((long)1).getCupo());
 		assertEquals(2.0, atraccionDAO.buscarPorIdAtraccion((long)1).getDuracion(), 0);
-		
 	}
 	
 	@Test
-	public void queAlConsultarUnaPromocionDevuelvaTodosSusDatos() {
-		PromocionDAO promocionDAO = DAOFactory.getPromocionDAO();
+	public void queAlConsultarUnaPromocionDevuelvaTodosSusDatos() throws SQLException {
+				PromocionDAO promocionDAO = DAOFactory.getPromocionDAO();
 		
 		assertTrue(promocionDAO.buscarPorIdPromocion((long)1).getNombre().equals("Pack aventura"));
 		
