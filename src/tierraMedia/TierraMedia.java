@@ -113,9 +113,9 @@ public class TierraMedia {
 	public void crearOferta() {
 		Usuario usr = seleccionarUsuario();
 
-		mostrarOfertasPosiblesVersion2(usr);
+//		mostrarOfertasPosiblesVersion2(usr);
 		
-		//mostrarOfertasPosibles(usr);
+		mostrarOfertasPosibles(usr);
 
 		usr.itinerarioToString();
 	}
